@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row mt-5"></div>
     <div class="col-md-6 offset-md-3">
-        <form class="border p-5 rounded" action=" {{ route('signup') }} " method="post">
+        <form class="border p-5 rounded-lg shadow-sm bg-white" action=" {{ route('signup') }} " method="post">
             <h2 class="mb-5 text-secondary">Welcome, please register</h2>
 
             @if(count($errors) > 0)

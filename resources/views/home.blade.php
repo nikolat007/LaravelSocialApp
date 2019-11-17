@@ -12,8 +12,9 @@
                     {{ Session::get('message') }}
                 </div>
             @endif
+            <div class="border p-3 rounded-lg shadow-sm bg-white">
             <h3><span class="badge badge-primary">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span></h3>
-            <form action=" {{ route('createPost') }} " method="post" >
+            <form action=" {{ route('createPost') }} " method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="post_field" maxlength='400' placeholder="What's on your mind?"></textarea>
                 </div>
@@ -24,20 +25,28 @@
                     @endforeach
                 </ul>
                 @endif
-                <button type="submit" class="btn btn-primary">Post</button>
+                <input type="file" name="post_image" class="">
+                <br>
+                <button type="submit" class="btn btn-primary mt-3">Post</button>
                 <input type="hidden" name="_token" value=" {{ Session::token() }} ">
             </form>
+            </div>
         </div>
     </div>
     <hr>
     <div class="row">
         <div class="col-md-6 offset-md-3">
             @foreach($posts as $post)
-            <div class="card mb-3 bg-light rounded">
+            <div class="card mb-3 rounded-lg shadow-sm bg-white">
                 <div class="card-body">
                 <h5 class="card-title"><a class="badge badge-primary" href="/profile/{{ $post->user->username }}">{{ $post->user->first_name }}  {{ $post->user->last_name }}</a></h5>
                     
                     <p class="card-text">{{ $post->body }}</p>
+                    @if($post->post_image != 'noimage.jpg')
+                    <img style="width:100%" src="/storage/post_images/{{ $post->post_image }}" alt="">
+                    <br>
+                    <br>
+                    @endif
                     <p class="card-text text-secondary"><i>Posted at {{ $post->created_at }}</i></p>
                     @if(Auth::user() == $post->user)
                     <a href="{{ route('deletePost', ['post_id' => $post->id]) }}" class="card-link btn btn-danger">Delete</a>

@@ -10,7 +10,7 @@
             <h4>User profiles</h4>
             <hr>
             @foreach($infos as $info)
-            <div class="card p-2 bg-light border-0 mb-3" style="">
+            <div class="card p-2 rounded-lg shadow-sm bg-white mb-3" style="">
                 <div class="row no-gutters">
                     <div class="col-md-2">
                         <img src="{{ asset('img/profile-user.svg')}}" style="width:60px" class="" alt="...">

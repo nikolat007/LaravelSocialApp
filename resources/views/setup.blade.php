@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6 offset-md-3 border rounded mt-5 p-5">
+        <div class="col-md-6 offset-md-3 border rounded-lg shadow-sm bg-white mt-5 p-5">
 
             <h2 class="text-center mt-5 mb-5">Setup your profile</h2>
 
@@ -45,6 +45,7 @@
                         <h5><span class="badge badge-secondary">Relationship status</span></h5>
                     </label>
                     <select class="form-control" name="relationship_status">
+                        <option value="">Hide</option>
                         <option value="Single">Single</option>
                         <option value="In relationship">In relationship</option>
                     </select>
