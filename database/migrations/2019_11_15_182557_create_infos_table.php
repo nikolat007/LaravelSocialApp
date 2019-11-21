@@ -20,7 +20,8 @@ class CreateInfosTable extends Migration
             $table->string('education')->nullable();
             $table->string('city')->nullable();
             $table->string('relationship')->nullable();
-            $table->string('username');
+            $table->string('username')->index();
+            $table->foreign('username')->references('username')->on('users')->onDelete('cascade');
         });
     }
 

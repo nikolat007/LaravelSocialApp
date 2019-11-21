@@ -50,6 +50,12 @@
         'middleware' => 'auth'
     ]);
 
+    Route::get('/editPost/{post_id}', [
+        'uses' => 'PostController@editPost',
+        'as' => 'editPost',
+        'middleware' => 'auth'
+    ]);
+
     Route::get('/deletePost/{post_id}', [
         'uses' => 'PostController@deletePost',
         'as' => 'deletePost',

@@ -26,7 +26,7 @@ class PostController extends Controller
         
         $this->validate($request, [
             'post_field' => 'required|max:400',
-            'post_image' => 'image|nullable|max:5000'
+            'post_image' => 'image|nullable|max:15000'
         ]);
 
         if($request->hasFile('post_image')){
@@ -37,7 +37,7 @@ class PostController extends Controller
             $path = $request->file('post_image')->storeAs('public/post_images', $fileNameToStore); 
         }
         else{
-            $fileNameToStore = 'noimage.jpg';
+            $fileNameToStore = NULL;
         }
         
 
@@ -52,6 +52,21 @@ class PostController extends Controller
         return redirect()->route('home')->with(['message' => $message]);
     }
 
+    public function editPost(Request $request, $post_id){
+        $this->validate($request, [
+            'post_update_field' => 'required|max:400'
+        ]);
+        
+        $post = Post::where('id', $post_id)->first();
+        if(Auth::user() != $post->user){
+            return redirect()->back();    
+        }
+        $post->body = $request['post_update_field'];
+        $post->update();
+        return redirect()->back()->with(['message' => 'Post successfully updated!']);
+        
+    }
+
     public function deletePost($post_id){
         $post = Post::where('id', $post_id)->first();
         if(Auth::user() != $post->user){
@@ -59,6 +74,6 @@ class PostController extends Controller
         }
         Storage::delete('/public/post_images/' . $post->post_image);
         $post->delete();
-        return redirect()->route('home')->with(['message' => 'Post successfully deleted!']);
+        return redirect()->back()->with(['message' => 'Post successfully deleted!']);
     }
 }

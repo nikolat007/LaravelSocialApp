@@ -16,7 +16,7 @@
             </ul>
             @endif
 
-            <form class="" action=" {{ route('setupInfo') }} " method="post">
+            <form class="" action=" {{ route('setupInfo') }} " method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="exampleInputWork">
                         <h5><span class="badge badge-secondary">Work</span></h5>
@@ -50,6 +50,12 @@
                         <option value="In relationship">In relationship</option>
                     </select>
                 </div>
+                <div class="form-group">
+                        <label for="exampleInputRelationship">
+                            <h5><span class="badge badge-secondary">Profile picture</span></h5>
+                        </label>
+                        <input type="file" name="profile_picture">
+                    </div>
                 <button type="submit" class="btn btn-success btn-block mb-5 mt-5">Update profile</button>
                 <input type="hidden" name="_token" value=" {{ Session::token() }} ">
             </form>

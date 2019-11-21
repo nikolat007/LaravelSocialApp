@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Info;
 use App\Post;
+use Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,9 +36,25 @@ class ProfileController extends Controller
         $this->validate($request, [
             'work' => 'max:60',
             'education' => 'max:60',
-            'currentcity' => 'max:30'
+            'currentcity' => 'max:30',
+            'profile_picture' => 'file|image|nullable|max:15000'
         ]);
 
+        $user = User::where('id', Auth::user()->id)->first();
+
+        if($request->hasFile('profile_picture')){
+            $filenameWithExt = $request->file('profile_picture')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('profile_picture')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('profile_picture')->storeAs('public/profile_pictures', $fileNameToStore); 
+            if($user->profile_pic != NULL){
+                Storage::delete('/public/profile_pictures/' . $user->profile_pic);
+            }
+        }
+        else{
+            $fileNameToStore = $user->profile_pic;
+        }
 
         $info = Info::where('username', Auth::user()->username)->first();
 
@@ -45,8 +62,10 @@ class ProfileController extends Controller
         $info->education = $request['education'];
         $info->city = $request['currentcity'];
         $info->relationship = $request['relationship_status'];
-
         $info->update();
+
+        $user->profile_pic = $fileNameToStore;
+        $user->update();
 
         return redirect()->route('profile', $info->username)->with(['message' => 'Your profile is successfully updated!']);
 

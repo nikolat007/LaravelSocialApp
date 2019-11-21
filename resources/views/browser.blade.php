@@ -13,7 +13,11 @@
             <div class="card p-2 rounded-lg shadow-sm bg-white mb-3" style="">
                 <div class="row no-gutters">
                     <div class="col-md-2">
-                        <img src="{{ asset('img/profile-user.svg')}}" style="width:60px" class="" alt="...">
+                        @if($info->user->profile_pic != NULL)
+                        <img src="" style="width:60px; height:60px; background-image:url('/storage/profile_pictures/{{ $info->user->profile_pic }}'); background-position:center; background-size:cover;" class="rounded-circle mx-auto d-block" alt="">
+                        @else
+                        <img src="" style="width:60px; height:60px; background-image:url('/storage/default_avatar/profile-user.svg'); background-position:center; background-size:cover;" class="rounded-circle mx-auto d-block" alt="">
+                        @endif
                     </div>
                     <div class="col-md-10">
                         <div class="card-body p-0">
