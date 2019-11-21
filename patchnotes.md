@@ -1,4 +1,4 @@
-<h2>Patch Notes</h2>
+<h1>Patch Notes</h1>
 
 <h3>Update 17.11.2019.</h3>
 <hr>
