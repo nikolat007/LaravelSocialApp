@@ -31,6 +31,7 @@ class ProfileController extends Controller
         return view('setup', ['info' => $info]);
     }
 
+
     public function setupInfo(Request $request){
 
         $this->validate($request, [
@@ -78,5 +79,20 @@ class ProfileController extends Controller
 
 
         return view('browser')->with(['infos' => $infos]);
+    }
+
+    public function postFollowUnfollow(Request $request){
+
+        if($request->follow){
+            $user = User::findOrFail($request->user);
+            Auth::user()->following()->attach($user->id);
+        }
+        if($request->unfollow){
+            $user = User::findOrFail($request->user);
+            Auth::user()->following()->detach($user->id);
+        }
+
+        return redirect()->back();
+
     }
 }

@@ -86,3 +86,9 @@
         'middleware' => 'auth'
     ]);
 
+    Route::post('/postFollowUnfollow', [
+        'uses' => 'ProfileController@postFollowUnfollow',
+        'as' => 'postFollowUnfollow',
+        'middleware' => 'auth'
+    ]);
+

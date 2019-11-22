@@ -9,6 +9,8 @@
         <form class="border p-5 rounded-lg shadow-sm bg-white" action=" {{ route('signin') }} " method="post">
             <h2 class="mb-5 text-secondary">Welcome, please login</h2>
 
+            @include('includes.message')
+
             @if(count($errors) > 0)
                 <ul>
                     @foreach($errors->all() as $error)

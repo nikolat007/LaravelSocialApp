@@ -23,7 +23,7 @@
                     @endforeach
                 </ul>
                 @endif
-                <input type="file" name="post_image" class="">
+                <input type="file" name="post_image" class="" accept="image/*">
                 <br>
                 <button type="submit" class="btn btn-primary mt-3">Post</button>
                 <input type="hidden" name="_token" value=" {{ Session::token() }} ">

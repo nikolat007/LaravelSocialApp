@@ -56,7 +56,7 @@ class UserController extends Controller
         if(Auth::attempt([ 'email' => $request['email'], 'password' => $request['password'] ])) {
             return redirect()->route('home');
         }
-        return redirect()->back();
+        return redirect()->back()->with(['danger-message' => 'Invalid username or password!' ]);
     }
 
     public function postLogout(){

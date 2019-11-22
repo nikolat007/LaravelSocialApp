@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\User;
 use Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,10 @@ class PostController extends Controller
 
     public function home(){
 
-        $posts = Post::latest()->get();
+
+        $following = Auth::user()->following->pluck('id');
+        
+        $posts = Post::whereIn('user_id', $following)->orWhere('user_id', Auth::user()->id)->latest()->get();
 
         return view('home', ['posts' => $posts]);
     }
@@ -26,7 +30,7 @@ class PostController extends Controller
         
         $this->validate($request, [
             'post_field' => 'required|max:400',
-            'post_image' => 'image|nullable|max:15000'
+            'post_image' => 'file|image|mimes:jpeg,png,jpg,gif,svg|nullable|max:15000'
         ]);
 
         if($request->hasFile('post_image')){

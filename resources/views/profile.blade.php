@@ -21,18 +21,18 @@
                 </p>
                 <div class="collapse" id="collapseExample">
                     <div class="card card-body p-0 border-0">
-                        <p class="border p-2 rounded-lg"><b>Email:</b> {{ $user->email }}</p>
+                        <p style="font-size:14px;" class="border p-2 rounded-lg"><b>Email:</b> {{ $user->email }}</p>
                         @if($info->work != NULL)
-                        <p class="border p-2 rounded-lg"><b>Work:</b> {{ $info->work }}</p>
+                        <p style="font-size:14px;" class="border p-2 rounded-lg"><b>Work:</b> {{ $info->work }}</p>
                         @endif
                         @if($info->education != NULL)
-                        <p class="border p-2 rounded-lg"><b>Education:</b> {{ $info->education }}</p>
+                        <p style="font-size:14px;" class="border p-2 rounded-lg"><b>Education:</b> {{ $info->education }}</p>
                         @endif
                         @if($info->city != NULL)
-                        <p class="border p-2 rounded-lg"><b>City:</b> {{ $info->city }}</p>
+                        <p style="font-size:14px;" class="border p-2 rounded-lg"><b>City:</b> {{ $info->city }}</p>
                         @endif
                         @if($info->relationship != NULL)
-                        <p class="border p-2 rounded-lg"><b>Relationship:</b> {{ $info->relationship }}</p>
+                        <p style="font-size:14px;" class="border p-2 rounded-lg"><b>Relationship:</b> {{ $info->relationship }}</p>
                         @endif
                     </div>
                 </div>
@@ -42,10 +42,44 @@
                     <p class="border p-2"><b>Education:</b> {{ $info->education }}</p>
                     <p class="border p-2"><b>City:</b> {{ $info->city }}</p>
                     <p class="border p-2"><b>Relationship:</b> {{ $info->relationship }}</p>-->
+                
+                @if($user->id != Auth::user()->id)
+                <form action=" {{route('postFollowUnfollow')}} " method="POST">
+                <input type="hidden" name="user" value="{{ $user->id }}">
+                    @if(Auth::user()->isFollowing($user) == 0)
+                    <button type="submit" class="btn btn-success btn-block mb-3" value="Follow" name="follow">Follow</button>
+                    @elseif(Auth::user()->isFollowing($user) == 1)
+                    <button type="submit" class="btn btn-danger btn-block mb-3" value="Unfollow" name="unfollow">Unfollow</button>
+                    @endif
+                    <input type="hidden" name="_token" value=" {{ Session::token() }} ">
+                </form>
+                @endif
 
                 @if($user->id == Auth::user()->id)
                 <a class="btn btn-success btn-block" href=" {{ route('setup') }} ">Update Profile</a>
                 @endif
+            </div>
+
+            <div class="following-followers mt-3 bg-white rounded-lg border shadow-sm">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="following-tab" data-toggle="tab" href="#following" role="tab"
+                            aria-controls="following" aria-selected="true">Following</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="followers-tab" data-toggle="tab" href="#followers" role="tab"
+                            aria-controls="followers" aria-selected="false">Followers</a>
+                    </li>
+                    <!--<li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                            aria-controls="contact" aria-selected="false">Contact</a>
+                    </li>-->
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="following" role="tabpanel" aria-labelledby="following-tab">@include('includes.following-list')</div>
+                    <div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="followers-tab">@include('includes.followers-list')</div>
+                    <!--<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>-->
+            </div>
             </div>
         </div>
 
@@ -58,19 +92,19 @@
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
                         aria-controls="home" aria-selected="true">Timeline</a>
                 </li>
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                         aria-controls="profile" aria-selected="false">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                         aria-controls="contact" aria-selected="false">Contact</a>
-                </li>
+                </li>-->
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">@include('includes.post')</div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                <!--<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>-->
             </div>
         </div>
 

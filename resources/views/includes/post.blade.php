@@ -13,7 +13,7 @@
         <div class="d-flex bd-highlight mb-3">
         <h5 class="mr-auto pt-1 bd-highlight card-title"><a class="" href="/profile/{{ $post->user->username }}">{{ $post->user->first_name }}
                 {{ $post->user->last_name }}</a></h5>
-        @if(Auth::user() == $post->user)
+        @if(Auth::user()->id == $post->user->id)
         <div class="btn-group ml-auto bd-highlight" role="group">
             <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false" style="font-size: 15px;"></button>
@@ -32,9 +32,9 @@
         <br>
         <br>
         @endif
-        <p class="card-text text-secondary"><i>Posted at {{ $post->created_at }}</i></p>
+        <p class="card-text text-secondary"><i>{{ $post->created_at->diffForHumans() }}</i></p>
 
-        @if(Auth::user() == $post->user)
+        @if(Auth::user()->id == $post->user->id)
         
         <!--<a href="#" class="card-link">Another link</a>-->
         <!--<a class="btn btn-success" data-toggle="collapse" href="#collapsePost{{$post->id}}" role="button"
